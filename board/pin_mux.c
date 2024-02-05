@@ -67,10 +67,10 @@ void BOARD_InitPins(void)
     /* Port B Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortB);
 
-    /* zepeca6 Port E Clock Gate Control: Clock enabled (led green)*/
+    /* carlosa Port E Clock Gate Control: Clock enabled (led green)*/
     CLOCK_EnableClock(kCLOCK_PortE);
 
-    /* zepeca6 Port C Clock Gate Control: Clock enabled (sw2) */
+    /* carlosa Port C Clock Gate Control: Clock enabled (sw2) */
     CLOCK_EnableClock(kCLOCK_PortC);
 
     const port_pin_config_t porta4_pin38_config = {/* Internal pull-up resistor is enabled */
@@ -89,7 +89,7 @@ void BOARD_InitPins(void)
                                                    kPORT_UnlockRegister};
     /* PORTA4 (pin 38) is configured as PTA4 */
     PORT_SetPinConfig(PORTA, 4U, &porta4_pin38_config);
-    /* zepeca6 PORTA6 (pin #) is configured as PTC6 (sw2) */
+    /* carlosa PORTA6 (pin #) is configured as PTC6 (sw2) */
     PORT_SetPinConfig(PORTC, 6U, &porta4_pin38_config);
 
     /* PORTB16 (pin 62) is configured as UART0_RX */
@@ -100,9 +100,9 @@ void BOARD_InitPins(void)
 
     /* PORTB22 (pin 68) is configured as PTB22 (red led) */
     PORT_SetPinMux(PORTB, 22U, kPORT_MuxAsGpio);
-    /* zepeca6 PORTB26 (pin #) is configured as PTB26 (led green) */
+    /* carlosa PORTB26 (pin #) is configured as PTB26 (led green) */
     PORT_SetPinMux(PORTE, 26U, kPORT_MuxAsGpio);
-    /* zepeca6 PORTB21 (pin #) is configured as PTB21 (led blue) */
+    /* carlosa PORTB21 (pin #) is configured as PTB21 (led blue) */
     PORT_SetPinMux(PORTB, 21U, kPORT_MuxAsGpio);
 
     SIM->SOPT5 = ((SIM->SOPT5 &

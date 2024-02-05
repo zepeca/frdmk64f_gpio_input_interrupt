@@ -5,15 +5,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/gpio_input_interrupt.c \
-../source/semihost_hardfault.c 
+../source/semihost_hardfault.c \
+../source/task_app.c 
 
 C_DEPS += \
 ./source/gpio_input_interrupt.d \
-./source/semihost_hardfault.d 
+./source/semihost_hardfault.d \
+./source/task_app.d 
 
 OBJS += \
 ./source/gpio_input_interrupt.o \
-./source/semihost_hardfault.o 
+./source/semihost_hardfault.o \
+./source/task_app.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -28,7 +31,7 @@ source/%.o: ../source/%.c source/subdir.mk
 clean: clean-source
 
 clean-source:
-	-$(RM) ./source/gpio_input_interrupt.d ./source/gpio_input_interrupt.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o
+	-$(RM) ./source/gpio_input_interrupt.d ./source/gpio_input_interrupt.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o ./source/task_app.d ./source/task_app.o
 
 .PHONY: clean-source
 
