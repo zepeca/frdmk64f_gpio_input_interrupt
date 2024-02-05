@@ -6,9 +6,9 @@ C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\drivers/fsl_gpio.h:206:20:
 ../source/gpio_input_interrupt.c:96:6:PORTA_IRQHandler	8	static
 ../source/gpio_input_interrupt.c:111:6:PORTC_IRQHandler	8	static
 ../source/gpio_input_interrupt.c:129:5:main	16	static
-../source/gpio_input_interrupt.c:193:6:p2f_state_a	8	static
-../source/gpio_input_interrupt.c:225:6:p2f_state_b	8	static
-../source/gpio_input_interrupt.c:257:6:p2f_state_c	8	static
-../source/gpio_input_interrupt.c:289:6:p2f_state_d	8	static
-../source/gpio_input_interrupt.c:321:6:p2f_state_e	8	static
-../source/gpio_input_interrupt.c:353:6:p2f_state_f	8	static
+../source/gpio_input_interrupt.c:192:6:p2f_state_a	8	static
+../source/gpio_input_interrupt.c:224:6:p2f_state_b	8	static
+../source/gpio_input_interrupt.c:256:6:p2f_state_c	8	static
+../source/gpio_input_interrupt.c:288:6:p2f_state_d	8	static
+../source/gpio_input_interrupt.c:320:6:p2f_state_e	8	static
+../source/gpio_input_interrupt.c:352:6:p2f_state_f	8	static

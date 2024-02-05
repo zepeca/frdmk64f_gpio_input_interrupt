@@ -207,14 +207,14 @@ void p2f_state_a( void){
     }
 
     /*add 1 to the current state*/
-    if (g_ButtonPress)
+     if (g_ButtonPress && !g_ButtonPress_switch2)
     {
     	current_state = state_b;
         g_ButtonPress = false;
     }
 
     /*susbtract 1 to the current state*/
-    if (g_ButtonPress_switch2)
+    if (g_ButtonPress_switch2 && !g_ButtonPress)
     {
     	current_state = state_f;
         g_ButtonPress_switch2 = false;
@@ -239,14 +239,14 @@ void p2f_state_b( void){
     }
 
     /*add 1 to the current state*/
-    if (g_ButtonPress)
+     if (g_ButtonPress && !g_ButtonPress_switch2)
     {
     	current_state = state_c;
         g_ButtonPress = false;
     }
 
     /*susbtract 1 to the current state*/
-    if (g_ButtonPress_switch2)
+    if (g_ButtonPress_switch2 && !g_ButtonPress)
     {
     	current_state = state_a;
         g_ButtonPress_switch2 = false;
@@ -271,14 +271,14 @@ void p2f_state_c( void){
     }
 
     /*add 1 to the current state*/
-    if (g_ButtonPress)
+     if (g_ButtonPress && !g_ButtonPress_switch2)
     {
     	current_state = state_d;
         g_ButtonPress = false;
     }
 
     /*susbtract 1 to the current state*/
-    if (g_ButtonPress_switch2)
+    if (g_ButtonPress_switch2 && !g_ButtonPress)
     {
     	current_state = state_b;
         g_ButtonPress_switch2 = false;
@@ -303,14 +303,14 @@ void p2f_state_d( void){
     }
 
     /*add 1 to the current state*/
-    if (g_ButtonPress)
+     if (g_ButtonPress && !g_ButtonPress_switch2)
     {
     	current_state = state_e;
         g_ButtonPress = false;
     }
 
     /*susbtract 1 to the current state*/
-    if (g_ButtonPress_switch2)
+    if (g_ButtonPress_switch2 && !g_ButtonPress)
     {
     	current_state = state_c;
         g_ButtonPress_switch2 = false;
@@ -335,14 +335,14 @@ void p2f_state_e( void){
     }
 
     /*add 1 to the current state*/
-    if (g_ButtonPress)
+     if (g_ButtonPress && !g_ButtonPress_switch2)
     {
     	current_state = state_f;
         g_ButtonPress = false;
     }
 
     /*susbtract 1 to the current state*/
-    if (g_ButtonPress_switch2)
+    if (g_ButtonPress_switch2 && !g_ButtonPress)
     {
     	current_state = state_d;
         g_ButtonPress_switch2 = false;
@@ -367,14 +367,14 @@ void p2f_state_f( void){
     }
 
     /*add 1 to the current state*/
-    if (g_ButtonPress)
+     if (g_ButtonPress && !g_ButtonPress_switch2)
     {
     	current_state = state_a;
         g_ButtonPress = false;
     }
 
     /*susbtract 1 to the current state*/
-    if (g_ButtonPress_switch2)
+    if (g_ButtonPress_switch2 && !g_ButtonPress)
     {
     	current_state = state_e;
         g_ButtonPress_switch2 = false;
