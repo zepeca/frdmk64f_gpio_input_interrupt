@@ -18,6 +18,8 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 #define BOARD_SW_NAME        BOARD_SW3_NAME
 
+#define MAX_PRIO             6
+
 /*****************************************************************************************************
 * Type def
 *****************************************************************************************************/
@@ -38,6 +40,7 @@ typedef enum
     TASK_STATE_D,
     TASK_STATE_E,
     TASK_STATE_F,
+    TASK_STATE_G,
     TASK_MAX,
 }tSchedulerTasks_ID;
 
@@ -48,6 +51,8 @@ typedef struct
     tSchedulerTasks_ID     TaskId;
     tPtr_to_function       ptrTask;
     tTaskStates            enTaskState;
+    uint8_t                u8Priority;
+
 }tSchedulingTask;
 
 /*******************************************************************************

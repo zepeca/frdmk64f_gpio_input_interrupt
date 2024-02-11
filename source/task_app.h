@@ -6,6 +6,7 @@
 #define GREEN_BIT       0b001
 #define PURPRLE_BIT     0b110
 #define TORQUOISE_BIT   0b011
+#define BROWN_BIT       0b101
 #define WHITE_BIT       0b111
 
 /*******************************************************************************
@@ -18,3 +19,4 @@ extern void p2f_state_c(void);
 extern void p2f_state_d(void);
 extern void p2f_state_e(void);
 extern void p2f_state_f(void);
+extern void p2f_state_g(void);

@@ -33,13 +33,14 @@ uint8_t gu8prev_state = TASK_STATE_F;
 
 /*carlosa stae machine array*/
 tSchedulingTask tasks_table[] = {
-    /*TaskId*/       /*ptrTask*/     /*enTaskState*/
-    {TASK_STATE_A,  p2f_state_a,    READY},
-    {TASK_STATE_B,  p2f_state_b,    SUSPENDED},
-    {TASK_STATE_C,  p2f_state_c,    SUSPENDED},
-    {TASK_STATE_D,  p2f_state_d,    SUSPENDED},
-    {TASK_STATE_E,  p2f_state_e,    SUSPENDED},
-    {TASK_STATE_F,  p2f_state_f,    SUSPENDED}
+    /*TaskId*/       /*ptrTask*/     /*enTaskState*/    /*u8Priority*/
+    {TASK_STATE_A,  p2f_state_a,    READY,              0},
+    {TASK_STATE_B,  p2f_state_b,    SUSPENDED,          1},
+    {TASK_STATE_C,  p2f_state_c,    SUSPENDED,          2},
+    {TASK_STATE_D,  p2f_state_d,    SUSPENDED,          3},
+    {TASK_STATE_E,  p2f_state_e,    SUSPENDED,          4},
+    {TASK_STATE_F,  p2f_state_f,    SUSPENDED,          5},
+    {TASK_STATE_G,  p2f_state_g,    READY,              5}
 };
 
 /*******************************************************************************
@@ -68,6 +69,8 @@ void BOARD_SW_IRQ_HANDLER(void)
 
     vfnScheduler_TaskActivate(&tasks_table[gu8curr_state]);
 
+    /*carlosa always activating task g for testing priority functionality*/
+    vfnScheduler_TaskActivate(&tasks_table[TASK_STATE_G]);
     SDK_ISR_EXIT_BARRIER;
 }
 
@@ -91,6 +94,8 @@ void BOARD_SW2_IRQ_HANDLER(void)
     }
 
     vfnScheduler_TaskActivate(&tasks_table[gu8curr_state]);
+
+    vfnScheduler_TaskActivate(&tasks_table[TASK_STATE_G]);
 
     SDK_ISR_EXIT_BARRIER;
 }
@@ -119,19 +124,48 @@ int main(void)
 * Call vfnScheduler_TaskStart for the first task within the state as READY
 */
 void vfnTask_Scheduler (void){
-    uint8_t lu8TaskToRun_Id = 0;
-    bool lboolRunTask_Flag = 0;
+    /*carlosa scheduler implementation */
+    bool    lboolRunTaskPrev_Flag = 0;
+    bool    lboolRunTask_Flag =     0;
+    uint8_t   lu8TaskToRun_Id =       0;
+    uint8_t   lu8Task_Id = 0;
 
-    for(uint8_t lu8Task_Id = 0; lu8Task_Id<TASK_MAX; lu8Task_Id++){
+    for(lu8Task_Id = 0; lu8Task_Id<TASK_MAX; lu8Task_Id++){
 
         if (tasks_table[lu8Task_Id].enTaskState == READY){
+
+            /*at least one task is ready*/
+            lboolRunTaskPrev_Flag = lboolRunTask_Flag;
             lboolRunTask_Flag = 1;
-            lu8TaskToRun_Id = lu8Task_Id;
-            break;
+
+            /*task is max prio*/
+            if (tasks_table[lu8Task_Id].u8Priority == MAX_PRIO){ 
+                lu8TaskToRun_Id = lu8Task_Id;
+                break;
+            }
+            else{
+
+                /*no prio to compare with*/
+                if (lboolRunTaskPrev_Flag == 0){
+                    lu8TaskToRun_Id = lu8Task_Id;
+                }
+                else{
+                    /*task priority is higher than current task to run*/
+                    if (tasks_table[lu8Task_Id].u8Priority > tasks_table[lu8TaskToRun_Id].u8Priority){
+
+                        lu8TaskToRun_Id = lu8Task_Id;
+                    }  
+                }
+                
+ 
+            }
         }
     }
 
+    /*at least one task is in ready state*/
     if (lboolRunTask_Flag){
+
+        /* start task */
         vfnScheduler_TaskStart (&tasks_table[lu8TaskToRun_Id]);
     }
 }

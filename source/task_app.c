@@ -78,6 +78,17 @@ void p2f_state_f(void){
     }
 }
 
+/*carlosa task g implementation for testing the priority*/
+void p2f_state_g(void){
+    if (gu8curr_state == gu8prev_state){
+        /*during*/
+    }
+    else{
+        /*entry*/
+        task_general_function(BROWN_BIT);
+    }
+}
+
 void task_general_function(uint8_t led_config){
     PRINTF("Entering sate (%d) from state (%d)\n", gu8curr_state, gu8prev_state);
     if (led_config & RED_BIT){
