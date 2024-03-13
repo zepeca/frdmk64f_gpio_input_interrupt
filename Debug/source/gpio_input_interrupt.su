@@ -1,10 +1,3 @@
-C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\CMSIS/core_cm4.h:1679:22:__NVIC_EnableIRQ	16	static
-C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\drivers/fsl_common_arm.h:499:24:EnableIRQ	24	static
-C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\drivers/fsl_port.h:443:20:PORT_SetPinInterruptConfig	24	static
-../source/gpio_input_interrupt.c:56:6:PORTA_IRQHandler	8	static
-../source/gpio_input_interrupt.c:82:6:PORTC_IRQHandler	8	static
-../source/gpio_input_interrupt.c:108:5:main	8	static
-../source/gpio_input_interrupt.c:126:6:vfnTask_Scheduler	16	static
-../source/gpio_input_interrupt.c:179:6:vfnScheduler_TaskStart	16	static
-../source/gpio_input_interrupt.c:190:6:vfnScheduler_TaskActivate	16	static
-../source/gpio_input_interrupt.c:199:6:general_init	16	static
+../source/gpio_input_interrupt.c:33:6:SysTick_Handler	8	static
+../source/gpio_input_interrupt.c:95:5:main	8	static
+../source/gpio_input_interrupt.c:112:6:general_init	16	static

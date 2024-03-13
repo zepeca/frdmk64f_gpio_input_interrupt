@@ -19,7 +19,9 @@ source/gpio_input_interrupt.o source/gpio_input_interrupt.d: \
  C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\board/clock_config.h \
  C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\board/board.h \
  C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\board/clock_config.h \
- ../source/gpio_input_interrupt.h ../source/task_app.h
+ ../source/gpio_input_interrupt.h ../source/task_app.h \
+ ../source/scheduler.h ../source/scheduler_type.h \
+ ../source/scheduler_cfg.h
 C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\utilities/fsl_debug_console.h:
 C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\drivers/fsl_common.h:
 C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\device/fsl_device_registers.h:
@@ -41,3 +43,6 @@ C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\board/board.h:
 C:\MCUXpresso_workspace\frdmk64f_gpio_input_interrupt\board/clock_config.h:
 ../source/gpio_input_interrupt.h:
 ../source/task_app.h:
+../source/scheduler.h:
+../source/scheduler_type.h:
+../source/scheduler_cfg.h:

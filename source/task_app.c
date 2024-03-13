@@ -8,6 +8,7 @@
 #include "gpio_input_interrupt.h"
 #include "fsl_debug_console.h"
 #include "stdint.h"
+#include "scheduler.h"
 
 /*******************************************************************************
  * Prototypes

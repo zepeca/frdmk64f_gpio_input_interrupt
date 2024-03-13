@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.c": "c",
+        "fsl_common.h": "c",
+        "scheduler.h": "c",
+        "pin_mux.h": "c",
+        "mk64f12.h": "c",
+        "gpio_input_interrupt.h": "c",
+        "fsl_debug_console.h": "c",
+        "scheduler_type.h": "c",
+        "task_app.h": "c",
+        "scheduler_cfg.h": "c"
+    }
+}

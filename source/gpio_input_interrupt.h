@@ -18,48 +18,7 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 #define BOARD_SW_NAME        BOARD_SW3_NAME
 
-#define MAX_PRIO             6
-
-/*****************************************************************************************************
-* Type def
-*****************************************************************************************************/
-
-typedef enum
-{
-    SUSPENDED,
-    READY,
-    RUNNING
-}tTaskStates;
-
-/* Task Scheduler Tasks IDs definitions */
-typedef enum  
-{   
-    TASK_STATE_A,
-    TASK_STATE_B,
-    TASK_STATE_C,
-    TASK_STATE_D,
-    TASK_STATE_E,
-    TASK_STATE_F,
-    TASK_STATE_G,
-    TASK_MAX,
-}tSchedulerTasks_ID;
-
-typedef  void  ( * tPtr_to_function )( void );
-
-typedef struct 
-{
-    tSchedulerTasks_ID     TaskId;
-    tPtr_to_function       ptrTask;
-    tTaskStates            enTaskState;
-    uint8_t                u8Priority;
-
-}tSchedulingTask;
-
-/*******************************************************************************
- * extern var
- ******************************************************************************/
-
-extern uint8_t gu8curr_state;
-extern uint8_t gu8prev_state;
+//#define BOTON_ENABLE  /*comment for disabling the buttons*/
+#define LED_ENABLE    /*comment for disabling the leds*/
 
 #endif /* _GPIO_INPUT_INTERRUPT_H_ */

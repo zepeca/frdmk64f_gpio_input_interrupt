@@ -15,40 +15,27 @@
 #include "board.h"
 #include "gpio_input_interrupt.h"
 #include "task_app.h"
+#include "scheduler.h"
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-void vfnTask_Scheduler(void);
-void vfnScheduler_TaskStart( tSchedulingTask * Task );
-void vfnScheduler_TaskActivate( tSchedulingTask * Task );
 void general_init (void);
-
-/*******************************************************************************
- * Variables
- ******************************************************************************/
-uint8_t gu8curr_state = TASK_STATE_A;
-uint8_t gu8prev_state = TASK_STATE_F;
-
-/*carlosa stae machine array*/
-tSchedulingTask tasks_table[] = {
-    /*TaskId*/       /*ptrTask*/     /*enTaskState*/    /*u8Priority*/
-    {TASK_STATE_A,  p2f_state_a,    READY,              0},
-    {TASK_STATE_B,  p2f_state_b,    SUSPENDED,          1},
-    {TASK_STATE_C,  p2f_state_c,    SUSPENDED,          2},
-    {TASK_STATE_D,  p2f_state_d,    SUSPENDED,          3},
-    {TASK_STATE_E,  p2f_state_e,    SUSPENDED,          4},
-    {TASK_STATE_F,  p2f_state_f,    SUSPENDED,          5},
-    {TASK_STATE_G,  p2f_state_g,    READY,              5}
-};
+void SysTick_Handler(void);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 
 /*
-* BOARD_SW_IRQ_HANDLER
+* calls vfnTask_Scheduler_Cbk
+ */
+void SysTick_Handler(){
+    vfnTask_Scheduler_Cbk();
+}
+
+#ifdef BOTON_ENABLE
+/*
 * Button 3 interruption handler
 * Activate next state according to the tSchedulerTasks_ID enum
 * Activate the task of that state
@@ -75,7 +62,6 @@ void BOARD_SW_IRQ_HANDLER(void)
 }
 
 /*
-* BOARD_SW2_IRQ_HANDLER
 * Button 2 interruption handler
 * Activate last state according to the tSchedulerTasks_ID enum
  */
@@ -99,6 +85,7 @@ void BOARD_SW2_IRQ_HANDLER(void)
 
     SDK_ISR_EXIT_BARRIER;
 }
+#endif/*BOTON_ENABLE*/
 
 
 /*!
@@ -110,7 +97,8 @@ int main(void)
 
     general_init();
 
-    PRINTF("carlosa \nscheduler FIFO. \nTotal task (%d)\n",TASK_MAX);
+    //to do call after creating the tasks
+    PRINTF("carlosa \nscheduler \nTotal task (%d)\n",TASK_MAX);
 
 	for(;;)
     {
@@ -119,89 +107,19 @@ int main(void)
 }
 
 /*
-* vfnTask_Scheduler
-* Linear check of tasks_table
-* Call vfnScheduler_TaskStart for the first task within the state as READY
-*/
-void vfnTask_Scheduler (void){
-    /*carlosa scheduler implementation */
-    bool    lboolRunTaskPrev_Flag = 0;
-    bool    lboolRunTask_Flag =     0;
-    uint8_t   lu8TaskToRun_Id =       0;
-    uint8_t   lu8Task_Id = 0;
-
-    for(lu8Task_Id = 0; lu8Task_Id<TASK_MAX; lu8Task_Id++){
-
-        if (tasks_table[lu8Task_Id].enTaskState == READY){
-
-            /*at least one task is ready*/
-            lboolRunTaskPrev_Flag = lboolRunTask_Flag;
-            lboolRunTask_Flag = 1;
-
-            /*task is max prio*/
-            if (tasks_table[lu8Task_Id].u8Priority == MAX_PRIO){ 
-                lu8TaskToRun_Id = lu8Task_Id;
-                break;
-            }
-            else{
-
-                /*no prio to compare with*/
-                if (lboolRunTaskPrev_Flag == 0){
-                    lu8TaskToRun_Id = lu8Task_Id;
-                }
-                else{
-                    /*task priority is higher than current task to run*/
-                    if (tasks_table[lu8Task_Id].u8Priority > tasks_table[lu8TaskToRun_Id].u8Priority){
-
-                        lu8TaskToRun_Id = lu8Task_Id;
-                    }  
-                }
-                
- 
-            }
-        }
-    }
-
-    /*at least one task is in ready state*/
-    if (lboolRunTask_Flag){
-
-        /* start task */
-        vfnScheduler_TaskStart (&tasks_table[lu8TaskToRun_Id]);
-    }
-}
-
-/*
-* vfnScheduler_TaskStart
-* Set task state to RUNNING
-* Calls Task ptrTask
-* Set task state to SUSPENDED
-*/
-void vfnScheduler_TaskStart( tSchedulingTask * Task )
-{   
-    Task->enTaskState = RUNNING;
-    Task->ptrTask();
-    Task->enTaskState = SUSPENDED;
-}
-
-/*
-* vfnScheduler_TaskStart
-* Set task state to READY
-*/
-void vfnScheduler_TaskActivate( tSchedulingTask * Task )
-{
-    Task->enTaskState = READY;
-}
-
-/*
-* general_init
-* initialize all before calling the scheduler
+* init function called in main
 */
 void general_init (void){
+
+#ifdef BOTON_ENABLE
     /* Define the init structure for the input switch pin */
     gpio_pin_config_t sw_config = {
         kGPIO_DigitalInput,
         0,
     };
+#endif /*BOTON_ENABLE*/
+
+#ifdef LED_ENABLE
     /* Define the init structure for the output LED pin */
     gpio_pin_config_t led_config = {
         kGPIO_DigitalOutput,
@@ -210,7 +128,9 @@ void general_init (void){
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-    
+#endif /*LED_ENABLE*/
+
+#ifdef BOTON_ENABLE    
 	PORT_SetPinInterruptConfig(BOARD_SW_PORT, BOARD_SW_GPIO_PIN, kPORT_InterruptFallingEdge);
 	PORT_SetPinInterruptConfig(BOARD_SW2_PORT, BOARD_SW2_GPIO_PIN, kPORT_InterruptFallingEdge);
 	EnableIRQ(BOARD_SW_IRQ);
@@ -219,11 +139,17 @@ void general_init (void){
 	GPIO_PinInit(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, &sw_config);
 	/*carlosa init input sw2 GPIO*/
 	GPIO_PinInit(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN, &sw_config);
+#endif /*BOTON_ENABLE*/
 
+#ifdef LED_ENABLE
 	/* Init output LED GPIO. */
 	GPIO_PinInit(BOARD_LED_GPIO, BOARD_LED_GPIO_PIN, &led_config);
 	/*carlosa to do: init output led gpio blue*/
 	GPIO_PinInit(BOARD_LED_BLUE_GPIO, BOARD_LED_BLUE_GPIO_PIN, &led_config);
 	/*carlosa to do: init output led gpio green*/
 	GPIO_PinInit(BOARD_LED_GREEN_GPIO, BOARD_LED_GREEN_GPIO_PIN, &led_config);
+#endif /*LED_ENABLE*/
+
+	/*scheduler init*/
+	vfnTask_Scheduler_Init();
 }
