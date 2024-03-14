@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/context_switch.c \
 ../source/gpio_input_interrupt.c \
 ../source/scheduler.c \
 ../source/scheduler_cfg.c \
@@ -11,6 +12,7 @@ C_SRCS += \
 ../source/task_app.c 
 
 C_DEPS += \
+./source/context_switch.d \
 ./source/gpio_input_interrupt.d \
 ./source/scheduler.d \
 ./source/scheduler_cfg.d \
@@ -18,6 +20,7 @@ C_DEPS += \
 ./source/task_app.d 
 
 OBJS += \
+./source/context_switch.o \
 ./source/gpio_input_interrupt.o \
 ./source/scheduler.o \
 ./source/scheduler_cfg.o \
@@ -37,7 +40,7 @@ source/%.o: ../source/%.c source/subdir.mk
 clean: clean-source
 
 clean-source:
-	-$(RM) ./source/gpio_input_interrupt.d ./source/gpio_input_interrupt.o ./source/scheduler.d ./source/scheduler.o ./source/scheduler_cfg.d ./source/scheduler_cfg.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o ./source/task_app.d ./source/task_app.o
+	-$(RM) ./source/context_switch.d ./source/context_switch.o ./source/gpio_input_interrupt.d ./source/gpio_input_interrupt.o ./source/scheduler.d ./source/scheduler.o ./source/scheduler_cfg.d ./source/scheduler_cfg.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o ./source/task_app.d ./source/task_app.o
 
 .PHONY: clean-source
 

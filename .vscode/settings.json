@@ -9,6 +9,9 @@
         "fsl_debug_console.h": "c",
         "scheduler_type.h": "c",
         "task_app.h": "c",
-        "scheduler_cfg.h": "c"
+        "scheduler_cfg.h": "c",
+        "stdint.h": "c",
+        "context_switch.h": "c",
+        "cmsis_armcc.h": "c"
     }
 }

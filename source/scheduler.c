@@ -11,10 +11,31 @@
 #include "MK64F12.h"
 
 /*******************************************************************************
+ * global var
+ ******************************************************************************/
+uint8_t gu8_task_to_run;
+unsigned int TASK_stack[256*TASK_MAX] = {0};
+unsigned int *TASK_stack_start[TASK_MAX];
+
+/*******************************************************************************
  * code
  ******************************************************************************/
 
 void vfnTask_Scheduler_Init(void){
+
+    uint8_t index_1 = 1;
+
+    /*stack start address for each task*/
+    for (uint8_t index_0 = 0; index_0 < TASK_MAX; index_0++) {
+        
+        TASK_stack_start[index_0] = &TASK_stack[256 * index_1 - STACK_REGISTERS];
+
+        /* Setting task function address for the link register */
+        TASK_stack[256 * index_1 - STACK_REGISTERS + LINKER_REGISTER] = (unsigned int)(tasks_table[index_0].ptrTask);
+
+        index_1++;
+    }
+
     /*SysTick configuration*/
     SysTick_Config(SystemCoreClock/SYSTICK_FREQUENCY_HZ);
 }
@@ -91,7 +112,15 @@ void vfnTask_Scheduler (void){
 void vfnScheduler_TaskStart( tSchedulingTask * Task )
 {   
     Task->enTaskState = RUNNING;
-    Task->ptrTask();
+
+    /*PendSV*/
+    SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+
+    /*update task to run*/
+    gu8_task_to_run = Task->TaskId;
+
+    //Task->ptrTask();
+    
     Task->enTaskState = SUSPENDED;
 }
 

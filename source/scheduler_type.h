@@ -44,7 +44,6 @@ typedef struct
     tPtr_to_function       ptrTask;
     tTaskStates            enTaskState;
     uint8_t                u8Priority;
-
 }tSchedulingTask;
 
 typedef bool tScheduler_bool;
